@@ -1,70 +1,198 @@
-" source $VIMRUNTIME/defaults.vim
-
 set nocompatible              " be iMproved, required
-filetype off                  " required
+" filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
+" ----------------------------------------------------------------------------
+" PLUGINS
+" ----------------------------------------------------------------------------
 
-Plugin 'godlygeek/tabular'
-" tabular must be beofre vim-markdown
-Plugin 'plasticboy/vim-markdown'
+call plug#begin('~/.vim/plugged')
 
-Plugin 'ap/vim-css-color'
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
 
-Plugin 'dkprice/vim-easygrep'
+" Any valid git URL is allowed
+" Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+" Multiple Plug commands can be written in a single line using | separators
+" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" On-demand loading
+" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Using a non-master branch
+" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+
+" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+" Plug 'fatih/vim-go', { 'tag': '*' }
+
+" Plugin options
+" Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+
+" Plugin outside ~/.vim/plugged with post-update hook
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" Unmanaged plugin (manually installed and updated)
+" Plug '~/my-prototype-plugin'
+
+Plug 'preservim/nerdtree'
+
+Plug 'vim-airline/vim-airline'
+
+Plug 'vim-airline/vim-airline-themes'
+
+Plug 'fatih/vim-go', { 'for': 'go' }
+
+Plug 'dense-analysis/ale'
+
+Plug 'majutsushi/tagbar'
+
+Plug 'ajh17/VimCompletesMe'
+
+Plug 'slashmili/alchemist.vim'
+
+Plug 'elixir-editors/vim-elixir'
+
+Plug 'slashmili/alchemist.vim'
+
+Plug 'tpope/vim-endwise'
+
+" Initialize plugin system
+call plug#end()
+
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
 " Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+" :PluginList          - list configured plugins
+" :PluginInstall(!)    - install (update) plugins
+" :PluginSearch(!) foo - search (or refresh cache first) for foo
+" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-set encoding=UTF-8
-filetype plugin indent on
-set spelllang=en_us
-set spell
-set backspace=indent,eol,start
-syntax on
-set autoindent
+
+" ----------------------------------------------------------------------------
+" OPTIONS
+" ----------------------------------------------------------------------------
+
+set autoindent                  " Carry over indenting from previous line
+set autoread                    " Don't bother me when a file changes
+set autowrite                   " Write on :next/:prev/^Z
+set backspace=indent,eol,start  " Allow backspace beyond insertion point
+set copyindent              " Make autoindent use the same chars as prev line
+set directory-=.            " Don't store temp files in cwd
+set encoding=utf8           " UTF-8 by default
+set expandtab               " No tabs
+set formatoptions=tcqn1     " t - autowrap normal text
+                            " c - autowrap comments
+                            " q - gq formats comments
+                            " n - autowrap lists
+                            " 1 - break _before_ single-letter words
+                            " 2 - use indenting from 2nd line of para
+set hlsearch                " Hilight searching
+set incsearch               " Search as you type
+set infercase               " Completion recognizes capitalization
+set laststatus=2            " Always show the status bar
+set linebreak               " Break long lines by word, not char
+set tabstop=2               " The One True Tab
+set textwidth=100           " 100 is the new 80
+
 set wildmenu
-set wildignore+=node_modules/*,bower_components/*
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-
-colorscheme wombat256grf
 
 
-" Always start vim with incsearch
-" set incsearch
+" Start NERDTree on Vim starts in directory
+autocmd vimenter * NERDTree
+
+" Start NERDTree on Vim starts regardless of if you're in a directory
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Change default NERDTree arrows
+" let g:NERDTreeDirArrowExpandable = '▸'
+" let g:NERDTreeDirArrowCollapsible = '▾'
+
+" Essential for filetype plugins.
+filetype plugin indent on
+
+" Set splits to be below and right
+set splitbelow
+set splitright
+
+
+" -----------
+"  ALE
+" -----------
+let g:ale_linters = {
+\   'elixir': ['elixir-ls'],
+\}
+
+let g:ale_fixers = {
+\   'elixir': ['mix_format'],
+\}
+
+let g:ale_elixir_elixir_ls_release='~/elixir_stuff/elixir-ls'
+
+let g:ale_completion_enabled = 1
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_text_changed = 'never'
+highlight ALEErrorSign ctermbg=NONE ctermfg=red
+highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+let g:ale_linters_explicit = 1
+let g:ale_lint_on_save = 1
+let g:ale_fix_on_save = 1
+
+noremap <Leader>ad :ALEGoToDefinition<CR>
+nnoremap <leader>af :ALEFix<cr>
+noremap <Leader>ar :ALEFindReferences<CR>
+
+" Move between linting errors
+nnoremap ]r :ALENextWrap<CR>
+nnoremap [r :ALEPreviousWrap<CR>
+
+
+" ----------------------------------------------------------------------------
+" MAPPINGS
+" ----------------------------------------------------------------------------
+" Switch split panes with <ctrl>+j/k/h/l
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+
+
+
+" ----------------------------------------------------------------------------
+" COLORS
+" ----------------------------------------------------------------------------
+
+syntax on
+
+" Make sure colored syntax mode is on, and make it Just Work with 256-color terminals.
+" set background=dark
+" let g:rehash256 = 1 " alternative scheme
+" let g:molokai_original = 1
+" colorscheme molokai
+
+"set background=dark
+colorscheme onedark
+
+" Custom colors for NERDTree
+highlight def link NERDTreeRO NERDTreeFile
+
+" Make menu selections visible
+highlight PmenuSel ctermfg=black ctermbg=magenta
+
+
+
+
+" More sweet config at https://github.com/statico/dotfiles/blob/master/.vim/vimrc
+
