@@ -2,6 +2,7 @@
 *
 
 # Don't ignore these though
+!README.md
 !.gitignore
 !.vimrc
-!.vim/
+!vim_folders/
