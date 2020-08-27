@@ -4,5 +4,4 @@
 # Don't ignore these though
 !.gitignore
 !.vimrc
-!/autoload
-!/colors
+!.vim/
