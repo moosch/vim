@@ -4,13 +4,10 @@ This is my work vim setup. Nothing too exciting, I just use it to work across ma
 
 ## Plugins
 
-
 [airblade](https://github.com/airblade/vim-gitgutter)
-
-[Wombat ColorScheme](https://github.com/gryf/wombat256grf)
-
-[CtrlP](https://github.com/ctrlpvim/ctrlp.vim)
 
 [NERDTree](https://github.com/preservim/nerdtree)
 
+[Elixir-LS](https://github.com/elixir-lsp/elixir-ls)
 
+Download ELixir-LS and place it in `~/elixir_stuff/elixir-ls`
